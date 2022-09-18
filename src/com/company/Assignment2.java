@@ -9,7 +9,10 @@ public class Assignment2 {
         //number of times to iterate
         int n = 100;
         testRunTimes(n);
-
+        n = 1000;
+        testRunTimes(n);
+        n = 10000;
+        testRunTimes(n);
     }
     public static void testRunTimes(int n){
 
