@@ -66,26 +66,37 @@ class Queue {
 
         queue.enqueue("A");
         queue.enqueue("B");
-        queue.dequeue();
-        queue.dequeue();
         queue.enqueue("C");
         queue.dequeue();
+        queue.dequeue();
+        queue.enqueue("D");
+        queue.dequeue();
+        queue.dequeue();
+
     }
 
     public void enqueue(String a) {
         if (total < size) {
-            System.out.println("Adding " + a + " to back of queue");
+            System.out.println("Enqueued: Adding " + a + " to back of queue");
+            //finding the location of the nearest open slot, math referenced from https://www.techiedelight.com/queue-implementation-in-java/
             behind = (behind + 1) % size;
             queue[behind] = a;
             total++;
+            if(total == size){
+                System.out.println("Queue is Full");
+            }
         }
     }
     public void dequeue() {
         if (total != 0) {
             String x = queue[front];
-            System.out.println("Removing " + x + " from front of queue");
+            System.out.println("Dequeued: Removing " + x + " from front of queue");
+            //finding the location of the nearest taken slot, math referenced from https://www.techiedelight.com/queue-implementation-in-java/
             front = (front + 1) % size;
             total--;
+            if(total == 0){
+                System.out.println("Queue is Empty");
+            };
         }
     }
 }
