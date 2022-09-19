@@ -28,17 +28,17 @@ class Stack {
             ++top;
             //set value to top
             stack[top] = n;
-            System.out.println("Pushed: " + n + " onto the stack");
+            System.out.println("Pushed " + n + " onto the stack");
         }
     }
     public void stackPop(){
         //make sure stack is not empty
         if(top != -1) {
-            System.out.println("Popped: " + stack[top]);
+            System.out.println("Popped " + stack[top]);
             //move top down one
             --top;
             if (top != -1) {
-                System.out.println("Top = " + stack[top]);
+                System.out.println("Top Value on Stack: " + stack[top]);
             }else{
                 System.out.println("Top = -1 Stack Empty");
             }

@@ -3,20 +3,13 @@ package com.company;
 class SingleOrDoubleLinkedList {
 
     Node head;
+    Node tail;
 
     static class Node {
 
         int data;
         Node next;
         Node prev;
-
-        public Node getNext() {
-            return next;
-        }
-
-        public void setNext(Node next) {
-            this.next = next;
-        }
 
         Node(int d) {
             data = d;
@@ -26,7 +19,7 @@ class SingleOrDoubleLinkedList {
     }
 
     public static SingleOrDoubleLinkedList insertSingle(SingleOrDoubleLinkedList list, int data) {
-        //create node
+        //create node with the data
         Node newNode = new Node(data);
 
         //if list is empty, new node is head
@@ -49,16 +42,19 @@ class SingleOrDoubleLinkedList {
         // create node with given data
         Node newNode = new Node(data);
 
-        // if list is empty, new node is head
+        // if list is empty, new node is head and tail
         if (list.head == null) {
             list.head = newNode;
+            list.tail = newNode;
         } else {
             //else go to last node and make it head
             Node last = list.head;
             while (last.next != null) {
                 last = last.next;
             }
-            // Insert the node at last node
+            //insert new node at last node and set tail
+            newNode.prev = list.tail;
+            list.tail = newNode;
             last.next = newNode;
             newNode.prev = last;
         }
@@ -114,7 +110,7 @@ class SingleOrDoubleLinkedList {
         printSingleLinkedList(singleLinkedList);
         printDoubleLinkedList(doubleLinkedList);
 
-        //swapping nodes
+        /////////////////////////////////////////SWAPPING NODES
 
         int key1 = 9;
         int key2 = 11;
@@ -136,12 +132,14 @@ class SingleOrDoubleLinkedList {
             singlePrev2 = singleCurrNode2;
             singleCurrNode2 = singleCurrNode2.next;
         }
-        //swapping next pointers of nodes
+        //handles the new next pointers for nodes surrounding the swap
         singlePrev1.next = singleCurrNode2;
         singlePrev2.next = singleCurrNode1;
         Node singleTemp = singleCurrNode1.next;
+
+        //swapping next pointers of nodes
         singleCurrNode1.next = singleCurrNode2.next;
-        singleCurrNode2.next=singleTemp;
+        singleCurrNode2.next = singleTemp;
 
         printSingleLinkedList(singleLinkedList);
 
@@ -161,21 +159,21 @@ class SingleOrDoubleLinkedList {
             doublePrev2 = doubleCurrNode2;
             doubleCurrNode2 = doubleCurrNode2.next;
         }
-        //swapping pointers of nodes
+
+        //handles pointers for nodes surrounding swap
         doublePrev1.next = doubleCurrNode2;
         doublePrev2.next = doubleCurrNode1;
+
         Node doubleTemp = doubleCurrNode1.next;
+        //swapping next pointers
         doubleCurrNode1.next = doubleCurrNode2.next;
-        doubleCurrNode2.next=doubleTemp;
+        doubleCurrNode2.next = doubleTemp;
+        //swapping prev pointers
+        doubleTemp = doubleCurrNode1.prev;
+        doubleCurrNode1.prev = doubleCurrNode2.prev;
+        doubleCurrNode2.prev = doubleTemp;
 
         printDoubleLinkedList(doubleLinkedList);
-
-
-
-
-
-
-
     }
 }
 
