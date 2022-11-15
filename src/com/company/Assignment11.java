@@ -3,7 +3,7 @@ package com.company;
 import java.lang.*;
 import java.util.*;
 
-class MaxFlow{
+class FordFulkerson {
     //Number of vertices
     int V = 6;
 
@@ -11,7 +11,7 @@ class MaxFlow{
     boolean BFS(int[][] residualGraph, int source, int sink, int[] parent){
         // Create a visited array and mark all vertices as not visited
         boolean[] visited = new boolean[V];
-        for(int i = 0; i < V; ++i){
+        for(int i = 0; i < V; i++){
             visited[i] = false;
         }
 
@@ -90,7 +90,7 @@ class MaxFlow{
                 {0, 0, 0, 0, 0, 0}  // sink
         };
 
-        MaxFlow m = new MaxFlow();
+        FordFulkerson m = new FordFulkerson();
 
         System.out.println("Max Flow is " + m.fordFulkerson(graph, 0, 5));
     }
