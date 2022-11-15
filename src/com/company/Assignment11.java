@@ -11,14 +11,12 @@ class MaxFlow{
     boolean BFS(int[][] residualGraph, int source, int sink, int[] parent){
         // Create a visited array and mark all vertices as not visited
         boolean[] visited = new boolean[V];
-
-        for (int i = 0; i < V; ++i){
+        for(int i = 0; i < V; ++i){
             visited[i] = false;
         }
 
         //Create a queue and enqueue source vertex and mark source vertex as visited
         LinkedList<Integer> queue = new LinkedList<>();
-
         queue.add(source);
         visited[source] = true;
         parent[source] = -1;
@@ -26,10 +24,10 @@ class MaxFlow{
         while (queue.size() != 0){
             int u = queue.poll();
 
-            for (int v = 0; v < V; v++){
-                if (!visited[v] && residualGraph[u][v] > 0){
+            for(int v = 0; v < V; v++){
+                if(!visited[v] && residualGraph[u][v] > 0){
                     //If a connection is found to the sink node halt bfs and set its parent and return true
-                    if (v == sink){
+                    if(v == sink){
                         parent[v] = u;
                         return true;
                     }
@@ -47,11 +45,11 @@ class MaxFlow{
     int fordFulkerson(int[][] graph, int source, int sink){
         int u, v;
 
-        // Create a residual graph based on original
+        //Create a residual graph based on original
         int[][] residualGraph = new int[V][V];
 
-        for (u = 0; u < V; u++){
-            for (v = 0; v < V; v++){
+        for(u = 0; u < V; u++){
+            for(v = 0; v < V; v++){
                 residualGraph[u][v] = graph[u][v];
             }
         }
@@ -63,15 +61,15 @@ class MaxFlow{
         int maxFlow = 0;
 
         //Augment the flow while there is path from source to sink
-        while (BFS(residualGraph, source, sink, parent)){
+        while(BFS(residualGraph, source, sink, parent)){
             int pathFlow = Integer.MAX_VALUE;
-            for (v = sink; v != source; v = parent[v]){
+            for(v = sink; v != source; v = parent[v]){
                 u = parent[v];
                 pathFlow = Math.min(pathFlow, residualGraph[u][v]);
             }
 
             //Update residual capacities of the edges and reverse edges along the path
-            for (v = sink; v != source; v = parent[v]){
+            for(v = sink; v != source; v = parent[v]){
                 u = parent[v];
                 residualGraph[u][v] -= pathFlow;
                 residualGraph[v][u] += pathFlow;
