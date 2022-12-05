@@ -6,47 +6,49 @@ class Partition {
 
     // FOLLOWING CODE WAS REFERENCED FROM: https://www.geeksforgeeks.org/partition-problem-dp-18/
     // Returns true if the array can be partitioned into two subsets of equal sum, else false
-    public static boolean findPartition(int[] array, int numElements) {
+    static boolean findPartition(int[] array, int n) {
         int sum = 0;
         int i;
         int j;
 
-        // Sum all elements in array
-        for(i = 0; i < numElements; i++) {
+        // Calculate sum of all elements
+        for(i = 0; i < n; i++){
             sum += array[i];
         }
 
-        // If sum is odd, then an equal partition is not possible, return false
-        if(sum % 2 != 0) {
+        // If the sum is odd, an even partition of the sum is impossible
+        if(sum % 2 != 0){
             return false;
         }
 
-        boolean[] partition = new boolean[sum / 2 + 1];
+        boolean[][] partition = new boolean[sum / 2 + 1][n + 1];
 
-        // Initialize the partition array as 0
-        for(i = 0; i <= sum / 2; i++) {
-            partition[i] = false;
+        // Initialize top row
+        for(i = 0; i <= n; i++){
+            partition[0][i] = true;
+        }
+
+        // Initialize leftmost column, except partition[0][0], as 0
+        for(i = 1; i <= sum / 2; i++){
+            partition[i][0] = false;
         }
 
         // Fill the partition table in bottom up manner
-        for(i = 0; i < numElements; i++) {
-
-            // The element to be included in the sum !> sum
-            for(j = sum / 2; j >= array[i]; j--) {
-
-                // Checks if sum - array[i] could be formed from a subset using elements before index i
-                if(partition[j - array[i]] == true || j == array[i]) {
-                    partition[j] = true;
+        for(i = 1; i <= sum / 2; i++){
+            for(j = 1; j <= n; j++) {
+                partition[i][j] = partition[i][j - 1];
+                if(i >= array[j - 1]){
+                    partition[i][j] = partition[i][j] || partition[i - array[j - 1]][j - 1];
                 }
             }
         }
-        return partition[sum / 2];
+        return partition[sum / 2][n];
     }
 
     public static void canBePartitioned(int[] array, int n){
-        if(findPartition(array, n)) {
+        if(findPartition(array, n)){
             System.out.println(Arrays.toString(array) + " CAN be partitioned");
-        }else {
+        }else{
             System.out.println(Arrays.toString(array) + "  CANNOT be partitioned");
         }
     }
